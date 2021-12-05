@@ -1,20 +1,19 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
-  skip_before_action: :authenticate_user!
-  before_action :configure_sign_up_params, only: [:create]
+  skip_before_action :authenticate_user!
+  #before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
-  def new
-    @user = User.new
-  end
+  # def new
 
-  # POST /resource
-  def create
-    Person.create(name: "Me", user_id: 1)
-    redirect_to home_path
-  end
+  # end
+
+  # # POST /resource
+  # def create
+
+  # end
 
   # GET /resource/edit
   # def edit
@@ -43,9 +42,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # protected
 
   # If you have extra params to permit, append them to the sanitizer.
-  def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :user_id])
-  end
+  # def configure_sign_up_params
+  #   devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :user_id])
+  # end
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_account_update_params

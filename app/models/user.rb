@@ -6,5 +6,4 @@ class User < ApplicationRecord
          :validatable
 
   has_many :people, dependent: :destroy
-  
 end

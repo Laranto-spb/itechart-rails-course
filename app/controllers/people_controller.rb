@@ -21,7 +21,6 @@ class PeopleController < ApplicationController
 
   # POST /people or /people.json
   def create
-
     @person = Person.new(person_params)
 
     respond_to do |format|
@@ -57,9 +56,9 @@ class PeopleController < ApplicationController
         format.json { head :no_content }
       end
 
-    else 
+    else
 
-      flash[:alert] = "You can not delete all people"
+      flash[:alert] = 'You can not delete all people'
       redirect_to people_path
     end
   end

@@ -69,6 +69,5 @@ module Users
     def create_person
       Person.create(name: 'Me', user_id: current_user.id) if current_user
     end
-
   end
 end

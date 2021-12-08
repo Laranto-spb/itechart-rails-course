@@ -1,6 +1,15 @@
 <h1>Hi, <%= current_user.name %></h1>
-<p> Welcome to Budget Application</h2>
+<p> Welcome to Budget Application</p>
 <p>Control your family finances easily than ever </p>
+
+<h2> Your persons: </h2>
+<ul>
+  <% @people.each do |p|%>
+    <li> <%= p.name %> </li>
+  <% end %>
+</ul>
+
+<%= link_to "Add person", new_person_path %>
 
 <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
 

@@ -3,12 +3,12 @@
 module Users
   class RegistrationsController < Devise::RegistrationsController
     skip_before_action :authenticate_user!
-    after_action :create_person
+    after_action :create_default_person
 
     # before_action :configure_sign_up_params, only: [:create]
     # before_action :configure_account_update_params, only: [:update]
 
-    # GET /resource/sign_up
+    # GET /resource/sign_upSS
     # def new
 
     # end
@@ -66,8 +66,9 @@ module Users
 
     private
 
-    def create_person
-      Person.create(name: 'Son', user_id: id)
+    def create_default_person
+      Person.create(name: 'Me', user_id: current_user.id) if current_user
     end
+
   end
 end

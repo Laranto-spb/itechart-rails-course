@@ -18,7 +18,7 @@ class PeopleControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create person' do
-    assert_difference('Person.count') do
+    assert_difference('Person.count', 1) do
       post people_url, params: { person: { name: @person.name, user_id: @person.user_id } }
     end
 
@@ -37,7 +37,7 @@ class PeopleControllerTest < ActionDispatch::IntegrationTest
 
   test 'should update person' do
     patch person_url(@person), params: { person: { name: @person.name, user_id: @person.user_id } }
-    assert_redirected_to person_url(@person)
+    assert_redirected_to people_url
   end
 
   test 'should destroy person' do

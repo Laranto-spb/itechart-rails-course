@@ -1,9 +1,13 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'People', type: :request do
-  before(:all) do
-    user = User.create(id: 1, name: 'Larisa', email: 'lar@mail.ru', password: '123456', password_confirmation: '123456')
-    person = Person.create(name: 'Person1', user_id: 1)
+  before do
+    let(:user) do
+      User.create(id: 1, name: 'Larisa', email: 'lar@mail.ru', password: '123456', password_confirmation: '123456')
+    end
+    let(:person) { Person.create(name: 'Person1', user_id: 1) }
   end
 
   # tests fail

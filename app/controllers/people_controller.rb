@@ -55,9 +55,7 @@ class PeopleController < ApplicationController
         format.html { redirect_to people_url, notice: 'Person was successfully destroyed.' }
         format.json { head :no_content }
       end
-
     else
-
       flash[:alert] = 'You can not delete all people'
       redirect_to people_path
     end

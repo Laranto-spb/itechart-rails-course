@@ -28,6 +28,7 @@ class PeopleController < ApplicationController
         format.html { redirect_to people_path, notice: 'Person was successfully created.' }
         format.json { render :show, status: :created, location: @person }
       else
+        flash.now[:alert] = 'Something went wrong'
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @person.errors, status: :unprocessable_entity }
       end
@@ -49,16 +50,16 @@ class PeopleController < ApplicationController
 
   # DELETE /people/1 or /people/1.json
   def destroy
-    if current_user.people.count > 1
-      @person.destroy
-      respond_to do |format|
-        format.html { redirect_to people_url, notice: 'Person was successfully destroyed.' }
-        format.json { head :no_content }
+      if @person.destroy
+        respond_to do |format|
+          format.html { redirect_to people_url, notice: 'Person was successfully destroyed.' }
+          format.json { head :no_content }
+        end
+      else
+        respond_to do |format|
+          format.html { redirect_to people_url, alert: "Sorry, but you cannot delete all people" }
+        end
       end
-    else
-      flash[:alert] = 'You can not delete all people'
-      redirect_to people_path
-    end
   end
 
   private

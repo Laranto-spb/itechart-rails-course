@@ -3,9 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'People', type: :request do
-
   describe 'get pages' do
-
     let!(:user) do
       User.create(name: 'Larisa', email: 'lar@mail.ru', password: '123456', password_confirmation: '123456')
     end
@@ -16,5 +14,4 @@ RSpec.describe 'People', type: :request do
       expect(response).to have_http_status(:success)
     end
   end
-
 end

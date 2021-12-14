@@ -5,18 +5,16 @@ class Person < ApplicationRecord
   validates :name, presence: true,
                    length: { minimum: 2, maximum: 25 }
 
-  before_destroy :check_people_count
   before_create :check_uniqueness
+  before_destroy :check_people_count
 
   private
 
   def check_people_count
-    if user.people.count <=1
-      throw(:abort) 
-    end
+    throw(:abort) if user.people.count <= 1
   end
 
   def check_uniqueness
-    throw(:abort) if user.people.where(name: name).exists?
+    throw(:abort) if user.people.exists?(name: name)
   end
 end

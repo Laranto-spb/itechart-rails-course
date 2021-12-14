@@ -2,6 +2,7 @@
 
 class PeopleController < ApplicationController
   before_action :set_person, only: %i[show edit update destroy]
+  before_action :create_person, only: [:create]
 
   # GET /people or /people.json
   def index
@@ -21,8 +22,6 @@ class PeopleController < ApplicationController
 
   # POST /people or /people.json
   def create
-    @person = Person.new(person_params)
-
     respond_to do |format|
       if @person.save
         format.html { redirect_to people_path, notice: 'Person was successfully created.' }
@@ -50,16 +49,16 @@ class PeopleController < ApplicationController
 
   # DELETE /people/1 or /people/1.json
   def destroy
-      if @person.destroy
-        respond_to do |format|
-          format.html { redirect_to people_url, notice: 'Person was successfully destroyed.' }
-          format.json { head :no_content }
-        end
-      else
-        respond_to do |format|
-          format.html { redirect_to people_url, alert: "Sorry, but you cannot delete all people" }
-        end
+    if @person.destroy
+      respond_to do |format|
+        format.html { redirect_to people_url, notice: 'Person was successfully destroyed.' }
+        format.json { head :no_content }
       end
+    else
+      respond_to do |format|
+        format.html { redirect_to people_url, alert: 'Sorry, but you cannot delete all people' }
+      end
+    end
   end
 
   private
@@ -72,5 +71,9 @@ class PeopleController < ApplicationController
   # Only allow a list of trusted parameters through.
   def person_params
     params.require(:person).permit(:name, :user_id)
+  end
+
+  def create_person
+    @person = Person.new(person_params)
   end
 end

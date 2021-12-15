@@ -1,0 +1,26 @@
+<h1>Your persons</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @people.each do |person| %>
+      <tr>
+        <td><%= person.name %></td>
+        <td>
+          <%= link_to 'Choose', person, class: "btn btn-outline-success" %>
+          <%= link_to 'Edit', edit_person_path(person), class: "btn btn-outline-warning" %>
+          <%= link_to 'Destroy', person, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<%= link_to '+ Add person ', new_person_path, class: "btn btn-primary" %>

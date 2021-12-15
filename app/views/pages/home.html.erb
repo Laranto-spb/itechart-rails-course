@@ -1,6 +1,21 @@
-<h1>Welocme to Budget Application</h1>
-<p>Control your family finances easily than ever </p>
+<h1>Hi, <%= current_user.name %></h1>
 
-<%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+<p> Select person to track </p>
+
+<div class="row">
+<%= form_with(class: 'col-4', method: 'get') do |form| %>
+  <select class="form-select mb-3 row col-2" aria-label="Select person">
+    <% @people.each do |p|%>
+      <option value="<%= p.id %>"><%= p.name%></option>
+    <% end %>
+  </select>
+  <%= link_to 'Choose', people_path, class: "btn btn-outline-success"%>
+<% end %>
+</div>
+
+
+
+
+
 
 

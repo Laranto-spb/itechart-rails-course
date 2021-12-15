@@ -1,0 +1,18 @@
+<% if obj.any? %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Summ</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% obj.each do |c|%>
+      <td><%= c.name %></td>
+      <td> N/A </td>
+      <% end %>
+    </tbody>
+  </table>
+  <% else %>
+  <p> No categories yet ... <p>
+<% end %>

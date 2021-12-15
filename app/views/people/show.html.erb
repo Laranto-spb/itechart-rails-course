@@ -1,7 +1,11 @@
-<p>
+<h1> Person details: </h2>
   <strong>Name:</strong>
   <%= @person.name %>
 </p>
+
+<h2> Categories </h2>
+
+<%= render 'categories', obj: @categories %>
 
 <%= link_to 'Edit', edit_person_path(@person) %> |
 <%= link_to 'Back', people_path %>

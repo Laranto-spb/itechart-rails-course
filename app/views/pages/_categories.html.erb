@@ -1,0 +1,22 @@
+<% if obj.any? %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Person</th>
+        <th scope="col">Summ</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% obj.each do |p|%>
+        <% p.categories.each do |c|%>
+          <td><%= c.name %></td>
+          <td><%= link_to p.name, person_path(p.id) %></td>
+          <td> N/A </td>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p> No categories yet </p>
+<% end %>

@@ -8,8 +8,14 @@
     </thead>
     <tbody>
       <% obj.each do |c|%>
-      <td><%= c.name %></td>
-      <td> N/A </td>
+      <tr>
+        <td>
+          <div class="badge rounded-pill <%= c.transaction_type == 'Debit' ? 'bg-success' : 'bg-danger' %>">
+            <%= link_to c.name, category_path(c), class: "link-light"%>
+          </div>
+        </td>
+        <td> N/A </td>
+      <tr>
       <% end %>
     </tbody>
   </table>

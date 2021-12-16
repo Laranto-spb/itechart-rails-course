@@ -8,11 +8,11 @@ module Users
     private
 
     def create_person_with_category
-      if current_user
-        person = Person.create(name: 'Me', user_id: current_user.id) 
-        category = Category.create(name: 'Food', transaction_type: 'Credit')
-        person.categories << category 
-      end
+      return unless current_user
+
+      person = Person.create(name: 'Me', user_id: current_user.id)
+      category = Category.create(name: 'Food', transaction_type: 'Credit')
+      person.categories << category
     end
   end
 end

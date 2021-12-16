@@ -4,14 +4,14 @@
       <tr>
         <th scope="col">Title</th>
         <th scope="col">Person</th>
-        <th scope="col">Summ</th>
+        <th scope="col">Sum</th>
       </tr>
     </thead>
     <tbody>
       <% obj.each do |p|%>
         <% p.categories.each do |c|%>
-          <td><%= c.name %></td>
-          <td><%= link_to p.name, person_path(p.id) %></td>
+          <td><%= link_to c.name, category_path(c) %></td>
+          <td><%= link_to p.name, person_path(p) %></td>
           <td> N/A </td>
         <% end %>
       <% end %>

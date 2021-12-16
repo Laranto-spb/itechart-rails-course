@@ -1,5 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: %i[ show edit update destroy ]
+  before_action :set_current_user_people, only: [:index, :new]
 
   # GET /categories or /categories.json
   def index
@@ -13,6 +14,7 @@ class CategoriesController < ApplicationController
   # GET /categories/new
   def new
     @category = Category.new
+    @people = current_user.people
   end
 
   # GET /categories/1/edit
@@ -64,7 +66,12 @@ class CategoriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def category_params
-      params.require(:category).permit(:name, :transaction_type)
+      params.require(:category).permit(:name, :transaction_type, person_categories_attributes: [:person_id, :category_id])
+    end
+
+    #Set people for current user
+    def set_current_user_people
+      @people = current_user.people
     end
 
 end

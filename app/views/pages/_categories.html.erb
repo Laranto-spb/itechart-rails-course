@@ -10,10 +10,18 @@
     <tbody>
       <% obj.each do |p|%>
         <% p.categories.each do |c|%>
-          <td><%= link_to c.name, category_path(c) %></td>
-          <td><%= link_to p.name, person_path(p) %></td>
+        <tr>
+          <td>
+            <div class="badge rounded-pill <%= c.transaction_type == 'Debit' ? 'bg-success' : 'bg-danger' %>">
+              <%= link_to c.name, category_path(c), class: "link-light"%>
+            </div>
+          </td>
+          <td>
+            <%= link_to p.name, person_path(p) %>
+          </td>
           <td> N/A </td>
         <% end %>
+        </tr>
       <% end %>
     </tbody>
   </table>

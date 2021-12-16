@@ -14,7 +14,14 @@
     <%= form.label 'Type' %>
     <%= form.select :transaction_type, ['Debit', 'Credit'] %>
   </div>
-
+  <div class="field">
+    <%= form.fields_for :person_category do |pc| %>
+      <%= pc.collection_check_boxes(:person_id, @people.order(:name), :id, :name,
+                                  {}, 
+                                  { class: ''}) %>
+      <%= pc.hidden_field :category_id, value: category.id %>                                  
+      <% end %>
+  </div>
   <div class="actions">
     <%= form.submit %>
   </div>

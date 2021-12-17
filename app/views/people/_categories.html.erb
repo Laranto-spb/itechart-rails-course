@@ -4,21 +4,25 @@
       <tr>
         <th scope="col">Title</th>
         <th scope="col">Sum</th>
+        <th scope="col">Actions</th>
       </tr>
     </thead>
     <tbody>
-      <% obj.each do |c|%>
+      <% obj.each do |category|%>
       <tr>
         <td>
-          <div class="badge rounded-pill <%= c.transaction_type == 'Debit' ? 'bg-success' : 'bg-danger' %>">
-            <%= link_to c.name, category_path(c), class: "link-light"%>
+          <div class="badge rounded-pill <%= category.transaction_type == 'Debit' ? 'bg-success' : 'bg-danger' %>">
+            <%= link_to category.name, category_path(category), class: "link-light"%>
           </div>
         </td>
         <td> N/A </td>
+        <td>
+          
+        </td>
       <tr>
       <% end %>
     </tbody>
   </table>
-  <% else %>
+<% else %>
   <p> No categories yet ... <p>
 <% end %>

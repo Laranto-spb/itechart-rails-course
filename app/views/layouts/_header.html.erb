@@ -23,7 +23,7 @@
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <li><%= link_to 'See your persons', people_path, class: "dropdown-item" %></li>
-                <li><%= link_to 'See categories summary', categories_path, class: "dropdown-item" %></li>
+                <li><%= link_to 'Add new category'.html_safe, new_category_path, class: "dropdown-item"%></li>
                 <li><%= link_to "Log out", destroy_user_session_path, method: :delete, class: "text-danger dropdown-item" %></li>
               </ul>
             </li>

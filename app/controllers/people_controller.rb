@@ -3,6 +3,7 @@
 class PeopleController < ApplicationController
   before_action :set_person, only: %i[show edit update destroy]
   before_action :create_person, only: [:create]
+  after_action :create_default_category, only: [:create]
 
   # GET /people or /people.json
   def index
@@ -78,4 +79,9 @@ class PeopleController < ApplicationController
   def create_person
     @person = Person.new(person_params)
   end
+
+  def create_default_category
+    @person.categories << Category.all.first
+  end
+
 end

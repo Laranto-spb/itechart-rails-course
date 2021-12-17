@@ -19,7 +19,9 @@ class CategoriesController < ApplicationController
   end
 
   # GET /categories/1/edit
-  def edit; end
+  def edit
+    @people = current_user.people
+  end
 
   # POST /categories or /categories.json
   def create

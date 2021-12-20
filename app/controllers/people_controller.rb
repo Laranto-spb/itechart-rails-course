@@ -83,5 +83,4 @@ class PeopleController < ApplicationController
   def create_default_category
     @person.categories << Category.all.first
   end
-
 end

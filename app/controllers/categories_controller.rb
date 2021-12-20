@@ -29,16 +29,14 @@ class CategoriesController < ApplicationController
       Category.transaction do
         @category = Category.new(category_params)
         @category.save!
-
       end
-
-    rescue ActiveRecord::RecordInvalid => invalid
-      return invalid.record.errors
+    rescue ActiveRecord::RecordInvalid => e
+      return e.record.errors
     end
 
     flash[:notice] = 'Category was successfully created.'
     redirect_to @category
-    
+
     # respond_to do |format|
     #   if @category.save
     #     format.html { redirect_to @category, notice: 'Category was successfully created.' }

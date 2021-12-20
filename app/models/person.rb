@@ -2,8 +2,8 @@
 
 class Person < ApplicationRecord
   belongs_to :user
-  has_many :person_categories
-  has_many :categories, through: :person_categories, dependent: :destroy
+  has_many :person_categories, dependent: :destroy
+  has_many :categories, through: :person_categories
   validates :name, presence: true,
                    length: { minimum: 2, maximum: 25 }
 

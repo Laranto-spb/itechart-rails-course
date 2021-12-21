@@ -17,7 +17,7 @@
     </div>
     <div class="form-group row mb-3">
         <%= form.label :person %>
-        <%= form.collection_select(:person_ids, @people, :id, :name, {}, { multiple: true, class: "form-control"}) %>                                
+        <%= form.collection_select(:person_ids, @people, :id, :name, {}, { multiple: true, class: "form-control", required: true}) %>                                
     </div>
     <div class="form-group row mb-3 justify-content-start">
       <%= form.submit class: "btn btn-outline-success col-4" %>

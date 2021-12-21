@@ -11,4 +11,10 @@ class Category < ApplicationRecord
     end
     super
   end
+
+  def create
+    return false if people.count.zero?
+
+    super
+  end
 end

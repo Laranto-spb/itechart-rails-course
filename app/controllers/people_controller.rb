@@ -69,6 +69,10 @@ class PeopleController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_person
     @person = Person.find(params[:id])
+    return if current_user == @person.user
+
+    flash[:alert] = 'You must be the owner of this person'
+    redirect_to people_path
   end
 
   # Only allow a list of trusted parameters through.
@@ -81,6 +85,6 @@ class PeopleController < ApplicationController
   end
 
   def create_default_category
-    @person.categories << Category.all.first
+    @person.categories << current_user.people.first.categories.first
   end
 end

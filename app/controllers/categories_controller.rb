@@ -70,7 +70,7 @@ class CategoriesController < ApplicationController
       end
     else
       respond_to do |format|
-        format.html { redirect_to @category, alert: 'Sorry, some person has this category alone' }
+        format.html { redirect_to @category, alert: 'Sorry, some person has this category all alone' }
       end
     end
   end
@@ -80,6 +80,10 @@ class CategoriesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_category
     @category = Category.find(params[:id])
+    return if current_user == @category.people.first.user
+
+    flash[:alert] = 'You must be the owner of this category'
+    redirect_to root_path
   end
 
   # Only allow a list of trusted parameters through.

@@ -25,13 +25,9 @@ class CategoriesController < ApplicationController
 
   # POST /categories or /categories.json
   def create
-    begin
-      Category.transaction do
-        @category = Category.new(category_params)
-        @category.save!
-      end
-    rescue ActiveRecord::RecordInvalid => e
-      return e.record.errors
+    Category.transaction do
+      @category = Category.new(category_params)
+      @category.save!
     end
 
     flash[:notice] = 'Category was successfully created.'

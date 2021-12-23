@@ -3,6 +3,7 @@
 class PeopleController < ApplicationController
   before_action :set_person, only: %i[show edit update destroy]
   before_action :create_person, only: [:create]
+  after_action :create_default_category, only: [:create]
 
   # GET /people or /people.json
   def index
@@ -10,7 +11,9 @@ class PeopleController < ApplicationController
   end
 
   # GET /people/1 or /people/1.json
-  def show; end
+  def show
+    @categories = @person.categories
+  end
 
   # GET /people/new
   def new
@@ -66,6 +69,10 @@ class PeopleController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_person
     @person = Person.find(params[:id])
+    return if current_user == @person.user
+
+    flash[:alert] = 'You must be the owner of this person'
+    redirect_to people_path
   end
 
   # Only allow a list of trusted parameters through.
@@ -75,5 +82,9 @@ class PeopleController < ApplicationController
 
   def create_person
     @person = Person.new(person_params)
+  end
+
+  def create_default_category
+    @person.categories << current_user.people.first.categories.first
   end
 end

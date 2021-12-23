@@ -2,20 +2,23 @@
 
 <p> Select person to track </p>
 
-<div class="row">
-<%= form_with(class: 'col-4', method: 'get') do |form| %>
-  <select class="form-select mb-3 row col-2" aria-label="Select person">
-    <% @people.each do |p|%>
-      <option value="<%= p.id %>"><%= p.name%></option>
-    <% end %>
-  </select>
-  <%= link_to 'Choose', people_path, class: "btn btn-outline-success"%>
-<% end %>
+
+<div  class="row">
+  <%= form_with(class: 'col-4 mb-4', method: 'get') do |form| %>
+    <%= form.collection_select(:person_id, @people.order(:name), :id, :name,
+                                { include_blank: 'Please select' }, 
+                                { class: 'form-select mb-3 col-2' }) %>
+    <%= form.submit 'Choose', class: "btn btn-outline-success"%>
+  <% end %>
 </div>
 
-
-
-
-
-
-
+<div class="row">
+  <h2> All categories: </h2>
+  <div class="col-4">
+    <% @categories.each do |category|%>
+      <div class="badge rounded-pill <%= category.transaction_type == 'Debit' ? 'bg-success' : 'bg-danger' %>">
+        <%= link_to category.name, category_path(category), class: "link-light"%>
+      </div>
+    <% end %>
+  </div>
+</div>

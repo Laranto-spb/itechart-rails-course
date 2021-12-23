@@ -23,8 +23,10 @@ module BudgetAppSqlite
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    # config for generators: rspec and no stylesheets
     config.generators do |g|
       g.test_framework = :rspec
+      g.stylesheets false
     end
   end
 end

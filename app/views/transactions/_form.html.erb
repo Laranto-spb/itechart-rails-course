@@ -1,0 +1,27 @@
+<%= form_with(model: transaction) do |form| %>
+  <% if transaction.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(transaction.errors.count, "error") %> prohibited this transaction from being saved:</h2>
+
+      <ul>
+        <% transaction.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :amount_value %>
+    <%= form.number_field :amount_value %>
+  </div>
+
+  <div class="field">
+    <%= form.label :person_category_id %>
+    <%= form.collection_select(:person_category_id, PersonCategory.where(person_id: current_user.people), :id, :category_id)%>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

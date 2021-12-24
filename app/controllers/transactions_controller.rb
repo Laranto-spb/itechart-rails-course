@@ -3,7 +3,6 @@ class TransactionsController < ApplicationController
 
   # GET /transactions or /transactions.json
   def index
-    @transactions = Transaction.all
   end
 
   # GET /transactions/1 or /transactions/1.json
@@ -49,9 +48,10 @@ class TransactionsController < ApplicationController
 
   # DELETE /transactions/1 or /transactions/1.json
   def destroy
+    @person = current_user.people.find(@transaction.person_category.person_id)
     @transaction.destroy
     respond_to do |format|
-      format.html { redirect_to transactions_url, notice: "Transaction was successfully destroyed." }
+      format.html { redirect_to person_path(@person), notice: "Transaction was successfully destroyed." }
       format.json { head :no_content }
     end
   end

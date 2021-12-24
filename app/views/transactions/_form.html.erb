@@ -18,7 +18,7 @@
 
   <div class="field">
     <%= form.label :person_category_id %>
-    <%= form.collection_select(:person_category_id, PersonCategory.where(person_id: current_user.people), :id, :category_id)%>
+    <%= form.collection_select(:person_category_id, PersonCategory.where(person_id: current_user.people), :id, :category)%>
   </div>
 
   <div class="actions">

@@ -13,6 +13,7 @@ class PeopleController < ApplicationController
   # GET /people/1 or /people/1.json
   def show
     @categories = @person.categories
+    @person_categories = @person.person_categories.where(created_at: Date.today.all_month)
   end
 
   # GET /people/new

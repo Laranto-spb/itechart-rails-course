@@ -12,7 +12,7 @@
   <% end %>
 </div>
 
-<div class="row">
+<div class="row mb-3">
   <h2> All categories: </h2>
   <div class="col-4">
     <% @categories.each do |category|%>
@@ -20,5 +20,11 @@
         <%= link_to category.name, category_path(category), class: "link-light"%>
       </div>
     <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-4">
+    <%= link_to '<i class="bi bi-cash-coin pe-2"></i> Add new transaction'.html_safe, new_transaction_path, class: "btn btn-outline-success"%>
   </div>
 </div>

@@ -15,11 +15,16 @@
     <%= form.label :amount_value %>
     <%= form.number_field :amount_value %>
   </div>
-
-  <div class="field">
-    <%= form.label :person_category_id %>
-    <%= form.collection_select(:person_category_id, PersonCategory.where(person_id: current_user.people), :id, :category)%>
-  </div>
+  <% if transaction.new_record?%>
+    <div class="field">
+      <%= form.label :person_category_id %>
+      <%= form.collection_select(:person_category_id, PersonCategory.where(person_id: @people), :id, :category, {}, {required: true})%>
+    </div>
+  <% else %>
+      <div class="field">
+        <%= form.hidden_field :person_category_id %>
+    </div>
+  <% end%>
 
   <div class="actions">
     <%= form.submit %>

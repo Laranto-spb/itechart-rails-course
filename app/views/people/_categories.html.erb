@@ -22,6 +22,7 @@
                   <li>
                     <span class="badge bg-primary"><%=  transaction.amount_value %></span> 
                     <span> Date: <%=  transaction.created_at.to_formatted_s(:short) %> </span>
+                    <%= link_to 'Update', edit_transaction_path(transaction) %> |
                     <%= link_to 'Delete', transaction_path(transaction), method: :delete, data: { confirm: 'Are you sure?' } %>
                   </li>
               <%end%>

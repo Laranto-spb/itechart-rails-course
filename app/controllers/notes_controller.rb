@@ -2,6 +2,7 @@
 
 class NotesController < ApplicationController
   before_action :set_note, only: %i[show edit update destroy]
+  before_action :set_transaction, only: %i[update destroy]
 
   # GET /notes or /notes.json
   def index
@@ -20,25 +21,22 @@ class NotesController < ApplicationController
   def edit; end
 
   # POST /notes or /notes.json
-  def create
-    @note = Note.new(note_params)
-
-    respond_to do |format|
-      if @note.save
-        format.html { redirect_to @note, notice: 'Note was successfully created.' }
-        format.json { render :show, status: :created, location: @note }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @note.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  # def create
+  #   @note = Note.new(note_params)
+  #     if @note.save
+  #       redirect_to money_transaction_path(@money_transaction)
+  #       flash[:notice] =  'Note was successfully created.' }
+  #     else
+  #       render :new
+  #     end
+  #   end
+  # end
 
   # PATCH/PUT /notes/1 or /notes/1.json
   def update
     respond_to do |format|
       if @note.update(note_params)
-        format.html { redirect_to @note, notice: 'Note was successfully updated.' }
+        format.html { redirect_to money_transaction_path(@money_transaction), notice: 'Note was successfully updated.' }
         format.json { render :show, status: :ok, location: @note }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -51,7 +49,7 @@ class NotesController < ApplicationController
   def destroy
     @note.destroy
     respond_to do |format|
-      format.html { redirect_to notes_url, notice: 'Note was successfully destroyed.' }
+      format.html { redirect_to money_transaction_path(@money_transaction), notice: 'Note was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -66,5 +64,9 @@ class NotesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def note_params
     params.require(:note).permit(:body)
+  end
+
+  def set_transaction
+    @money_transaction = @note.money_transaction
   end
 end

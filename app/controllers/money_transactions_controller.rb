@@ -9,7 +9,11 @@ class MoneyTransactionsController < ApplicationController
   def index; end
 
   # GET /transactions/1 or /transactions/1.json
-  def show; end
+  def show
+    @person = Person.find(PersonCategory.find(@money_transaction.person_category_id).person_id)
+    @category = Category.find(PersonCategory.find(@money_transaction.person_category_id).category_id)
+    @note = @money_transaction.note
+  end
 
   # GET /transactions/new
   def new
@@ -24,13 +28,12 @@ class MoneyTransactionsController < ApplicationController
   def create
     @money_transaction = MoneyTransaction.new(money_transaction_params)
 
-      if @money_transaction.save
-        flash[:notice] = 'Transaction was successfully created.'
-        redirect_to person_path(@person)
-      else
-        render :new
-      end
-
+    if @money_transaction.save
+      flash[:notice] = 'Transaction was successfully created.'
+      redirect_to person_path(@person)
+    else
+      render :new
+    end
   end
 
   # PATCH/PUT /transactions/1 or /transactions/1.json
@@ -56,6 +59,12 @@ class MoneyTransactionsController < ApplicationController
   end
 
   private
+
+  # #create note
+  # def create_note
+  #   note = Note.new(body: params[:body])
+  #   @money_transaction.note = note
+  # end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_money_transaction

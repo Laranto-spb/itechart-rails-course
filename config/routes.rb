@@ -2,7 +2,7 @@
 
 Rails.application.routes.draw do
   resources :notes
-  resources :transactions, except: %i[index show]
+  resources :money_transactions, except: %i[index show]
   resources :categories, except: [:index]
   match '/404', to: 'errors#not_found', via: :all
   match '/500', to: 'errors#internal_server_error', via: :all

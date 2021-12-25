@@ -1,11 +1,11 @@
 <div class="col-6">
-  <%= form_with(model: transaction) do |form| %>
-    <% if transaction.errors.any? %>
+  <%= form_with(model: @money_transaction) do |form| %>
+    <% if @money_transaction.errors.any? %>
       <div id="error_explanation">
-        <h2><%= pluralize(transaction.errors.count, "error") %> prohibited this transaction from being saved:</h2>
+        <h2><%= pluralize(@money_transaction.errors.count, "error") %> prohibited this transaction from being saved:</h2>
 
         <ul>
-          <% transaction.errors.each do |error| %>
+          <% @money_transaction.errors.each do |error| %>
             <li><%= error.full_message %></li>
           <% end %>
         </ul>
@@ -16,7 +16,7 @@
       <%= form.label :amount_value %>
       <%= form.number_field :amount_value, class: "form-control" %>
     </div>
-    <% if transaction.new_record?%>
+    <% if @money_transaction.new_record?%>
   <div class="form-group row mb-3">
         <%= form.label 'Category'%>
         <%= form.collection_select(:person_category_id, PersonCategory.where(person_id: @people), :id, :category, {}, {required: true, class: "form-control"})%>

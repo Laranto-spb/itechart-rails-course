@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class TransactionsController < ApplicationController
-  before_action :set_transaction, only: %i[show edit update destroy]
+class MoneyTransactionsController < ApplicationController
+  before_action :set_money_transaction, only: %i[show edit update destroy]
   before_action :set_person_category, only: [:destroy]
   before_action :set_person_created_for, only: %i[create update]
 
@@ -14,7 +14,7 @@ class TransactionsController < ApplicationController
   # GET /transactions/new
   def new
     @people = current_user.people
-    @transaction = Transaction.new
+    @money_transaction = MoneyTransaction.new
   end
 
   # GET /transactions/1/edit
@@ -22,35 +22,33 @@ class TransactionsController < ApplicationController
 
   # POST /transactions or /transactions.json
   def create
-    @transaction = Transaction.new(transaction_params)
+    @money_transaction = MoneyTransaction.new(money_transaction_params)
 
-    respond_to do |format|
-      if @transaction.save
-        format.html { redirect_to person_path(@person), notice: 'Transaction was successfully created.' }
-        format.json { render :show, status: :created, location: @transaction }
+      if @money_transaction.save
+        flash[:notice] = 'Transaction was successfully created.'
+        redirect_to person_path(@person)
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @transaction.errors, status: :unprocessable_entity }
+        render :new
       end
-    end
+
   end
 
   # PATCH/PUT /transactions/1 or /transactions/1.json
   def update
     respond_to do |format|
-      if @transaction.update(transaction_params)
+      if @money_transaction.update(money_transaction_params)
         format.html { redirect_to person_path(@person), notice: 'Transaction was successfully updated.' }
-        format.json { render :show, status: :ok, location: @transaction }
+        format.json { render :show, status: :ok, location: @money_transaction }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @transaction.errors, status: :unprocessable_entity }
+        format.json { render json: @money_transaction.errors, status: :unprocessable_entity }
       end
     end
   end
 
   # DELETE /transactions/1 or /transactions/1.json
   def destroy
-    @transaction.destroy
+    @money_transaction.destroy
     respond_to do |format|
       format.html { redirect_to person_path(@person), notice: 'Transaction was successfully destroyed.' }
       format.json { head :no_content }
@@ -60,20 +58,20 @@ class TransactionsController < ApplicationController
   private
 
   # Use callbacks to share common setup or constraints between actions.
-  def set_transaction
-    @transaction = Transaction.find(params[:id])
+  def set_money_transaction
+    @money_transaction = MoneyTransaction.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
-  def transaction_params
-    params.require(:transaction).permit(:amount_value, :person_category_id)
+  def money_transaction_params
+    params.require(:money_transaction).permit(:amount_value, :person_category_id)
   end
 
   def set_person_category
-    @person = current_user.people.find(@transaction.person_category.person_id)
+    @person = current_user.people.find(@money_transaction.person_category.person_id)
   end
 
   def set_person_created_for
-    @person = Person.find(PersonCategory.find(transaction_params[:person_category_id]).person_id)
+    @person = Person.find(PersonCategory.find(money_transaction_params[:person_category_id]).person_id)
   end
 end

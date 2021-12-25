@@ -16,14 +16,14 @@
           </div>
         </td>
         <td>
-          <% if person_category.transactions.any? %>
+          <% if person_category.money_transactions.any? %>
             <ul class="list-reset">
-              <% person_category.transactions.each do |transaction|%> 
+              <% person_category.money_transactions.each do |transaction|%> 
                   <li>
                     <span class="badge bg-primary"><%=  transaction.amount_value %></span> 
                     <span> Date: <%=  transaction.created_at.to_formatted_s(:short) %> </span>
-                    <%= link_to 'Update', edit_transaction_path(transaction) %> |
-                    <%= link_to 'Delete', transaction_path(transaction), method: :delete, data: { confirm: 'Are you sure?' } %>
+                    <%= link_to 'Update', edit_money_transaction_path(transaction) %> |
+                    <%= link_to 'Delete', money_transaction_path(transaction), method: :delete, data: { confirm: 'Are you sure?' } %>
                   </li>
               <%end%>
             </ul>
@@ -32,7 +32,7 @@
           <% end %>
         </td>
         <td>
-          <%= person_category.transactions.sum(&:amount_value) %>
+          <%= person_category.money_transactions.sum(&:amount_value) %>
         <td>
       <tr>
       <% end %>

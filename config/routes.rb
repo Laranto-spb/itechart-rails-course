@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :notes
   resources :transactions, except: %i[index show]
   resources :categories, except: [:index]
   match '/404', to: 'errors#not_found', via: :all

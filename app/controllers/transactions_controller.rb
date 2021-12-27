@@ -23,7 +23,6 @@ class TransactionsController < ApplicationController
   # POST /transactions or /transactions.json
   def create
     @transaction = Transaction.new(transaction_params)
-
     respond_to do |format|
       if @transaction.save
         format.html { redirect_to person_path(@person), notice: 'Transaction was successfully created.' }

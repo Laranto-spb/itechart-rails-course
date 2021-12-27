@@ -26,8 +26,9 @@ class MoneyTransactionsController < ApplicationController
 
   # POST /transactions or /transactions.json
   def create
+    byebug
     @money_transaction = MoneyTransaction.new(money_transaction_params)
-
+    create_note(@money_transaction, params)
     if @money_transaction.save
       flash[:notice] = 'Transaction was successfully created.'
       redirect_to person_path(@person)
@@ -60,11 +61,11 @@ class MoneyTransactionsController < ApplicationController
 
   private
 
-  # #create note
-  # def create_note
-  #   note = Note.new(body: params[:body])
-  #   @money_transaction.note = note
-  # end
+  #create note
+  def create_note(transaction, params)
+    note = Note.new(body: params[:body])
+    transaction.note = note
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_money_transaction

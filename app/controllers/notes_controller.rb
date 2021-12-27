@@ -4,14 +4,6 @@ class NotesController < ApplicationController
   before_action :set_note, only: %i[show edit update destroy]
   before_action :set_transaction, only: %i[update destroy]
 
-  # GET /notes or /notes.json
-  def index
-    @notes = Note.all
-  end
-
-  # GET /notes/1 or /notes/1.json
-  def show; end
-
   # GET /notes/new
   def new
     @note = Note.new
@@ -20,17 +12,6 @@ class NotesController < ApplicationController
   # GET /notes/1/edit
   def edit; end
 
-  # POST /notes or /notes.json
-  # def create
-  #   @note = Note.new(note_params)
-  #     if @note.save
-  #       redirect_to money_transaction_path(@money_transaction)
-  #       flash[:notice] =  'Note was successfully created.' }
-  #     else
-  #       render :new
-  #     end
-  #   end
-  # end
 
   # PATCH/PUT /notes/1 or /notes/1.json
   def update

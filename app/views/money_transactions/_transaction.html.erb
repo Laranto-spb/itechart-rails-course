@@ -10,16 +10,16 @@
             <%= link_to "Edit note", edit_note_path(@note) %> |
             <%= link_to "Delete", note_path(@note), method: :delete, data: { confirm: "Are you sure?" } %>
           <% else %>
-            No notes yet...
-            <%= link_to "Add note", new_note_path %>
+            No notes yet...  
           <%end%>
         </div>
         <div class="card-footer text-muted">
           Created: <%= @money_transaction.created_at %>
         </div>
       </div>
-    </div>  
+      <div class="transaction_btns">
+        <%= link_to 'Edit transaction', edit_money_transaction_path(@money_transaction) %> |
+        <%= link_to 'Back to person transaction list', person_path(@money_transaction.person_category_id) %>
+      </div>
+    </div>   
 </div>
-
-<%= link_to 'Edit', edit_money_transaction_path(@money_transaction) %> |
-<%= link_to 'Back to person transaction list', person_path(@money_transaction.person_category_id) %>

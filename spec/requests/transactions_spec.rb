@@ -10,7 +10,7 @@ RSpec.describe '/transactions', type: :request do
 
     it 'show new transaction form' do
       login_as(user, scope: :user)
-      get '/transactions/new'
+      get '/money_transactions/new'
       expect(response).to have_http_status(:success)
     end
   end

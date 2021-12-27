@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Transaction, type: :model do
+RSpec.describe MoneyTransaction, type: :model do
   describe 'Validations' do
     let!(:user) do
       User.create(name: 'User', email: 'user@mail.ru', password: '123456', password_confirmation: '123456')
@@ -11,13 +11,13 @@ RSpec.describe Transaction, type: :model do
 
     it 'has empty amount_value' do
       person.categories << Category.create(name: 'Category')
-      transaction = Transaction.create(amount_value: nil, person_category_id: person.categories.first)
+      transaction = MoneyTransaction.create(amount_value: nil, person_category_id: person.categories.first)
       expect(transaction).not_to be_valid
     end
 
     it 'has only positive number' do
       person.categories << Category.create(name: 'Category')
-      transaction = Transaction.create(amount_value: -190, person_category_id: person.categories.first)
+      transaction = MoneyTransaction.create(amount_value: -190, person_category_id: person.categories.first)
       expect(transaction).not_to be_valid
     end
   end
@@ -31,14 +31,14 @@ RSpec.describe Transaction, type: :model do
 
     it 'creates new transaction' do
       person.categories << Category.create(name: 'Category')
-      Transaction.create(amount_value: 2000, person_category_id: person.person_categories.first.id)
-      expect(person.person_categories.first.transactions).to be_truthy
+      MoneyTransaction.create(amount_value: 2000, person_category_id: person.person_categories.first.id)
+      expect(person.person_categories.first.money_transactions).to be_truthy
     end
 
     it 'deletes transaction' do
       person.categories << Category.create(name: 'Category')
-      transaction = Transaction.create(amount_value: 3000, person_category_id: person.person_categories.first.id)
-      expect { transaction.destroy }.to change(Transaction, :count).by(-1)
+      transaction = MoneyTransaction.create(amount_value: 3000, person_category_id: person.person_categories.first.id)
+      expect { transaction.destroy }.to change(MoneyTransaction, :count).by(-1)
     end
   end
 end

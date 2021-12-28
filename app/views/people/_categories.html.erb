@@ -18,14 +18,20 @@
         <td>
           <% if person_category.money_transactions.any? %>
             <ul class="list-reset">
-              <% person_category.money_transactions.each do |transaction|%> 
-                  <li>
-                    <span class="badge bg-primary"><%=  transaction.amount_value %></span> 
-                    <span> Date: <%=  transaction.created_at.to_formatted_s(:short) %> </span>
-                    <%= link_to 'Update', edit_money_transaction_path(transaction) %> |
-                    <%= link_to 'Delete', money_transaction_path(transaction), method: :delete, data: { confirm: 'Are you sure?' } %> |
-                    <%= link_to 'Details', money_transaction_path(transaction) %>
-                  </li>
+              <% person_category.money_transactions.order(:note_id).each do |transaction|%> 
+                <li>
+                  <% if transaction.note%>
+                    <i class="bi bi-sticky-fill"></i>
+                  <% else%>
+                    <i class="bi bi-sticky"></i>
+                  <%end%>
+
+                  <span class="badge bg-primary"><%=  transaction.amount_value %></span> 
+                  <span> Date: <%=  transaction.created_at.to_formatted_s(:short) %> </span>
+                  <%= link_to 'Update', edit_money_transaction_path(transaction) %> |
+                  <%= link_to 'Delete', money_transaction_path(transaction), method: :delete, data: { confirm: 'Are you sure?' } %> |
+                  <%= link_to 'Details', money_transaction_path(transaction) %>
+                </li>
               <%end%>
             </ul>
           <% else %>

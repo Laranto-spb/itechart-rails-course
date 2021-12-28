@@ -21,16 +21,15 @@
         <%= form.label 'Category'%>
         <%= form.collection_select(:person_category_id, PersonCategory.where(person_id: @people), :id, :select_title, {}, {required: true, class: "form-control"})%>
       </div>
+      <div class="form-group row mb-3">
+        <%= form.label 'Text your note' %>
+        <%= form.text_field :body, class: "form-control" %>
+      </div>
     <% else %>
       <div class="form-group row mb-3">
           <%= form.hidden_field :person_category_id %>
       </div>
     <% end%>
-
-    <div class="form-group row mb-3">
-        <%= form.label 'Text your note' %>
-        <%= form.text_field :body, class: "form-control" %>
-    </div>
 
   <div class="form-group row mb-3 justify-content-start">
     <%= form.submit class: "btn btn-outline-success col-4" %>

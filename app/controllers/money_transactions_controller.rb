@@ -38,8 +38,8 @@ class MoneyTransactionsController < ApplicationController
 
   # PATCH/PUT /transactions/1 or /transactions/1.json
   def update
-    create_note(@money_transaction, params.values[2][:body]) if !@money_transaction.note
-    if @money_transaction.update(money_transaction_params) 
+    create_note(@money_transaction, params.values[2][:body]) unless @money_transaction.note
+    if @money_transaction.update(money_transaction_params)
       flash[:notice] = 'Transaction was successfully updated.'
       redirect_to money_transaction_path(@money_transaction)
     else

@@ -2,5 +2,4 @@
 
 <%= render 'form', note: @note %>
 
-<%= link_to 'Show', @note %> |
-<%= link_to 'Back', notes_path %>
+<%= link_to 'Back to transaction', money_transaction_path(@note.money_transaction)%> 

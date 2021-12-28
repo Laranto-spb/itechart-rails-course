@@ -26,9 +26,15 @@
         <%= form.text_field :body, class: "form-control" %>
       </div>
     <% else %>
-      <div class="form-group row mb-3">
+      <% if !@money_transaction.note %>
+        <div class="form-group row mb-3">
+          <%= form.label 'Text your note' %>
+          <%= form.text_field :body, class: "form-control" %>
+        </div>
+      <% end %>
+        <div class="form-group row mb-3">
           <%= form.hidden_field :person_category_id %>
-      </div>
+        </div>
     <% end%>
 
   <div class="form-group row mb-3 justify-content-start">

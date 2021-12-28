@@ -18,7 +18,7 @@
         <td>
           <% if person_category.money_transactions.any? %>
             <ul class="list-reset">
-              <% person_category.money_transactions.order(:note_id).each do |transaction|%> 
+              <% person_category.money_transactions.order(created_at: :asc).each do |transaction|%> 
                 <li>
                   <% if transaction.note%>
                     <i class="bi bi-sticky-fill"></i>

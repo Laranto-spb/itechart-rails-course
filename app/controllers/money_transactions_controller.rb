@@ -27,7 +27,7 @@ class MoneyTransactionsController < ApplicationController
   # POST /transactions or /transactions.json
   def create
     @money_transaction = MoneyTransaction.new(money_transaction_params)
-    create_note(@money_transaction, params)
+    create_note(@money_transaction, params.values[1][:body])
     if @money_transaction.save
       flash[:notice] = 'Transaction was successfully created.'
       redirect_to person_path(@person)
@@ -38,14 +38,12 @@ class MoneyTransactionsController < ApplicationController
 
   # PATCH/PUT /transactions/1 or /transactions/1.json
   def update
-    respond_to do |format|
-      if @money_transaction.update(money_transaction_params)
-        format.html { redirect_to person_path(@person), notice: 'Transaction was successfully updated.' }
-        format.json { render :show, status: :ok, location: @money_transaction }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @money_transaction.errors, status: :unprocessable_entity }
-      end
+    create_note(@money_transaction, params.values[2][:body]) if !@money_transaction.note
+    if @money_transaction.update(money_transaction_params) 
+      flash[:notice] = 'Transaction was successfully updated.'
+      redirect_to money_transaction_path(@money_transaction)
+    else
+      render :edit
     end
   end
 
@@ -61,12 +59,12 @@ class MoneyTransactionsController < ApplicationController
   private
 
   # create note
-  def create_note(transaction, params)
-    note = Note.new(body: params.values[1][:body])
+  def create_note(transaction, body)
+    note = Note.new(body: body)
     if note.valid?
       transaction.note = note
     else
-      flash[:alert] = 'Note was not saved, maybe it was empty of too long'
+      flash[:alert] = 'Note was not saved, maybe it was invalid'
     end
   end
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class NotesController < ApplicationController
-  before_action :set_note, only: %i[show edit update destroy]
+  before_action :set_note, only: %i[edit update destroy]
   before_action :set_transaction, only: %i[update destroy]
 
   # GET /notes/new
@@ -11,7 +11,6 @@ class NotesController < ApplicationController
 
   # GET /notes/1/edit
   def edit; end
-
 
   # PATCH/PUT /notes/1 or /notes/1.json
   def update
@@ -40,6 +39,11 @@ class NotesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_note
     @note = Note.find(params[:id])
+    transaction = MoneyTransaction.find_by(note: @note)
+    return if current_user == transaction.person_category.person.user
+
+    flash[:alert] = 'You must be owner of this note'
+    redirect_to root_path
   end
 
   # Only allow a list of trusted parameters through.

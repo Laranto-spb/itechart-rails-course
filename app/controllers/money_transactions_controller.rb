@@ -26,7 +26,6 @@ class MoneyTransactionsController < ApplicationController
 
   # POST /transactions or /transactions.json
   def create
-    byebug
     @money_transaction = MoneyTransaction.new(money_transaction_params)
     create_note(@money_transaction, params)
     if @money_transaction.save
@@ -61,15 +60,23 @@ class MoneyTransactionsController < ApplicationController
 
   private
 
-  #create note
+  # create note
   def create_note(transaction, params)
-    note = Note.new(body: params[:body])
-    transaction.note = note
+    note = Note.new(body: params.values[1][:body])
+    if note.valid?
+      transaction.note = note
+    else
+      flash[:alert] = 'Note was not saved, maybe it was empty of too long'
+    end
   end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_money_transaction
     @money_transaction = MoneyTransaction.find(params[:id])
+    return if current_user == @money_transaction.person_category.person.user
+
+    flash[:alert] = 'You must be owner of this transaction'
+    redirect_to root_path
   end
 
   # Only allow a list of trusted parameters through.

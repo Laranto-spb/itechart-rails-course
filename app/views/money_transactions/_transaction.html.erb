@@ -19,7 +19,7 @@
       </div>
       <div class="transaction_btns">
         <%= link_to 'Edit transaction', edit_money_transaction_path(@money_transaction) %> |
-        <%= link_to 'Back to person transaction list', person_path(@money_transaction.person_category_id) %>
+        <%= link_to 'Back to person transaction list', person_path(@money_transaction.person_category.person_id) %>
       </div>
     </div>   
 </div>

@@ -39,7 +39,11 @@
           <% end %>
         </td>
         <td>
-          <%= person_category.money_transactions.sum(&:amount_value) %>
+          <% if person_category.category.transaction_type == 'Credit' %>
+            - <%= person_category.money_transactions.sum(&:amount_value) %>
+          <% else %>
+            + <%= person_category.money_transactions.sum(&:amount_value) %>
+          <% end %>
         <td>
       <tr>
       <% end %>

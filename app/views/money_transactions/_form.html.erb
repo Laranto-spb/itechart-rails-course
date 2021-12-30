@@ -19,7 +19,7 @@
     <% if @money_transaction.new_record?%>
       <div class="form-group row mb-3">
         <%= form.label 'Category'%>
-        <%= form.select(:person_category_id, options_for_select(PersonCategory.where(person_id: @people).map { |pc| [pc.select_title, pc.id]}), {}, {required: true, class: "form-control"}) %>
+        <%= form.select(:person_category_id, options_for_select(PersonCategory.where(person_id: @people).order(:person_id).map { |pc| [pc.select_title, pc.id]}), {}, {required: true, class: "form-control"}) %>
       </div>
       <div class="form-group row mb-3">
         <%= form.label 'Text your note' %>
@@ -37,8 +37,13 @@
         </div>
     <% end%>
 
-  <div class="form-group row mb-3 justify-content-start">
-    <%= form.submit class: "btn btn-outline-success col-4" %>
-  </div>
+    <div class="form-group row mb-3 col-3">
+      <%= form.label 'Is it important?'%>
+      <%= form.select(:important, [ ['Yes', true], ['No', false]], {}, {required: true, class: "form-control"}) %>
+    </div>
+
+    <div class="form-group row mb-3 justify-content-start">
+      <%= form.submit class: "btn btn-outline-success col-4" %>
+    </div>
   <% end %>
 </div>

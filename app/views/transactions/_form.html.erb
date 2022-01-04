@@ -1,0 +1,35 @@
+<div class="col-6">
+  <%= form_with(model: transaction) do |form| %>
+    <% if transaction.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(transaction.errors.count, "error") %> prohibited this transaction from being saved:</h2>
+
+        <ul>
+          <% transaction.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group row mb-3">
+        <%= form.label :amount_value %>
+        <%= form.number_field :amount_value, class: "form-control" %>
+      </div>
+    <% if transaction.new_record?%>
+
+    <div class="form-group row mb-3">
+        <%= form.label 'Category'%>
+        <%= form.select(:person_category_id, options_for_select(PersonCategory.where(person_id: @people).map { |pc| [pc.select_title, pc.id]}), {}, {required: true, class: "form-control"}) %>
+    </div>
+    <% else %>
+    <div class="form-group row mb-3">
+          <%= form.hidden_field :person_category_id %>
+      </div>
+    <% end%>
+
+  <div class="form-group row mb-3 justify-content-start">
+    <%= form.submit class: "btn btn-outline-success col-4" %>
+  </div>
+  <% end %>
+</div>

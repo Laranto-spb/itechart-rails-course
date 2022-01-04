@@ -3,22 +3,37 @@
     <thead>
       <tr>
         <th scope="col">Title</th>
-        <th scope="col">Sum</th>
-        <th scope="col">Actions</th>
+        <th scope="col">Transactions</th>
+        <th scope="col"> Total summ<th>
       </tr>
     </thead>
     <tbody>
-      <% obj.each do |category|%>
+      <% obj.each do |person_category|%>
       <tr>
         <td>
-          <div class="badge rounded-pill <%= category.transaction_type == 'Debit' ? 'bg-success' : 'bg-danger' %>">
-            <%= link_to category.name, category_path(category), class: "link-light"%>
+          <div class="badge rounded-pill <%= person_category.category.transaction_type == 'Debit' ? 'bg-success' : 'bg-danger' %>">
+            <%= link_to person_category.category.name, category_path(person_category.category), class: "link-light"%>
           </div>
         </td>
-        <td> N/A </td>
         <td>
-          
+          <% if person_category.transactions.any? %>
+            <ul class="list-reset">
+              <% person_category.transactions.each do |transaction|%> 
+                  <li>
+                    <span class="badge bg-primary"><%=  transaction.amount_value %></span> 
+                    <span> Date: <%=  transaction.created_at.to_formatted_s(:short) %> </span>
+                    <%= link_to 'Update', edit_transaction_path(transaction) %> |
+                    <%= link_to 'Delete', transaction_path(transaction), method: :delete, data: { confirm: 'Are you sure?' } %>
+                  </li>
+              <%end%>
+            </ul>
+          <% else %>
+            None
+          <% end %>
         </td>
+        <td>
+          <%= person_category.transactions.sum(&:amount_value) %>
+        <td>
       <tr>
       <% end %>
     </tbody>

@@ -30,6 +30,10 @@ gem 'devise'
 gem 'devise-bootstrap-views', '~> 1.0'
 gem 'pg', '~> 1.2', '>= 1.2.3'
 
+# Charts for visulaization
+gem "chartkick"
+gem 'groupdate'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 

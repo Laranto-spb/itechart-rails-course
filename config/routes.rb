@@ -9,4 +9,6 @@ Rails.application.routes.draw do
   resources :people
   devise_for :users, controllers: { registrations: 'users/registrations' }
   root 'pages#home'
+
+  get '/charts', to: 'charts#index'
 end

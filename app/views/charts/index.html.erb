@@ -1,0 +1,19 @@
+<h1><i class="bi bi-pie-chart-fill me-3"></i>Statistics </h1>
+
+<p class="m-0"> Your people are: </p>
+<ul class="list-reset">
+  <% @people.each do |p|%>
+    <li><%= link_to p.name, person_path(p.id) %><li>
+  <% end %>
+</ul>
+
+<h2>Total credits for all people:</h2>
+
+<%= pie_chart @credits, donut: true %>
+
+
+<h2>Total debits for all people:</h2>
+
+<%= pie_chart @debits, donut: true %>
+
+<!-- <%= pie_chart @people.group(:name).count %> -->

@@ -1,5 +1,6 @@
-class ChartsController < ApplicationController
+# frozen_string_literal: true
 
+class ChartsController < ApplicationController
   def index
     @people = current_user.people
     @categories = current_user.people.collect(&:categories).flatten.uniq
@@ -9,24 +10,23 @@ class ChartsController < ApplicationController
 
   private
 
-
   def get_credit_transactions(categories)
-
     credit_transaction = []
-    categories.select{ |c| c.transaction_type == 'Credit'}.each do |credit|
-      credit_transaction += [[credit.name, MoneyTransaction.where(person_category_id: credit.person_categories).sum(&:amount_value)]]
+    categories.select { |c| c.transaction_type == 'Credit' }.each do |credit|
+      transactions = MoneyTransaction.where(person_category_id: credit.person_categories,
+                                            created_at: Time.zone.today.all_month).sum(&:amount_value)
+      credit_transaction += [[credit.name, transactions]] if transactions.positive?
     end
     credit_transaction
-
   end
 
   def get_debit_transactions(categories)
     debit_transaction = []
-    categories.select{ |c| c.transaction_type == 'Debit'}.each do |debit|
-      debit_transaction += [[debit.name, MoneyTransaction.where(person_category_id: debit.person_categories).sum(&:amount_value)]]
+    categories.select { |c| c.transaction_type == 'Debit' }.each do |debit|
+      transactions = MoneyTransaction.where(person_category_id: debit.person_categories,
+                                            created_at: Time.zone.today.all_month).sum(&:amount_value)
+      debit_transaction += [[debit.name, transactions]] if transactions.positive?
     end
     debit_transaction
   end
-
-
 end

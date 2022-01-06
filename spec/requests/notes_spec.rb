@@ -41,4 +41,25 @@ RSpec.describe '/notes', type: :request do
       expect { transaction.destroy }.to change(Note, :count).by(-1)
     end
   end
+
+  describe 'showing proper information' do
+    let!(:user) do
+      User.create(name: 'User', email: 'user@mail.ru', password: '123456', password_confirmation: '123456')
+    end
+    let!(:person) { Person.create(name: 'Person', user_id: user.id) }
+
+    before do
+      login_as(user, scope: :user)
+    end
+
+    it 'shows note after create' do
+      person.categories << Category.create(name: 'Category')
+      transaction = MoneyTransaction.create(amount_value: 2000, person_category_id: person.person_categories.first.id)
+      note = Note.create(body: 'Some description')
+      transaction.note = note
+      transaction.save
+      get money_transaction_path(transaction)
+      expect(response.body).to include('Some description')
+    end
+  end
 end

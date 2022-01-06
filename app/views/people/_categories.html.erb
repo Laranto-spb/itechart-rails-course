@@ -3,7 +3,7 @@
     <thead>
       <tr>
         <th scope="col">Title</th>
-        <th scope="col">Transactions</th>
+        <th scope="col">Transactions <sup>*</sup></th>
         <th scope="col"> Total summ<th>
       </tr>
     </thead>
@@ -18,8 +18,15 @@
         <td>
           <% if person_category.money_transactions.any? %>
             <ul class="list-reset">
-              <% person_category.money_transactions.order(created_at: :asc).each do |transaction|%> 
+              <% person_category.money_transactions.order(important: :desc, created_at: :asc).each do |transaction|%> 
                 <li>
+
+                  <% if transaction.important %>
+                    <i class="bi bi-exclamation-circle-fill text-danger"></i> 
+                  <% else %>
+                    <i class="bi bi-exclamation-circle-fill opacity-0"></i> 
+                  <% end %>
+
                   <% if transaction.note%>
                     <i class="bi bi-sticky-fill"></i>
                   <% else%>
@@ -49,6 +56,14 @@
       <% end %>
     </tbody>
   </table>
+  <div>
+   <ul class="list-reset">
+    <li>*</li>
+    <li><i class="bi bi-exclamation-circle-fill text-danger"></i> - important transaction</li>
+    <li><i class="bi bi-sticky-fill"></i> - transaction with note </li>
+    <li><i class="bi bi-sticky"></i> - transaction without note </li>
+   </ul>
+  </div>
 <% else %>
   <p> No categories yet ... <p>
 <% end %>

@@ -5,12 +5,12 @@ class ChartsController < ApplicationController
   before_action :set_user_categories, only: %i[index]
 
   def index
-    if params[:search]
-      @start_date = DateTime.parse(params[:search][:start_date])
-      @end_date = format_date(DateTime.parse(params[:search][:end_date]))
-    else
+    if validate_date(params)
       @start_date = Time.zone.today.beginning_of_month
       @end_date = format_date(Time.zone.today)
+    else
+      @start_date = DateTime.parse(params[:search][:start_date])
+      @end_date = format_date(DateTime.parse(params[:search][:end_date]))
     end
 
     set_credits
@@ -57,5 +57,9 @@ class ChartsController < ApplicationController
 
   def set_debits
     @debits = get_debit_transactions(@categories, @start_date, @end_date)
+  end
+
+  def validate_date(params)
+    params[:search].nil? || params[:search][:start_date].empty? || params[:search][:end_date].empty?
   end
 end

@@ -10,6 +10,7 @@ import "channels"
 import "bootstrap"
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import "chartkick/chart.js"
+import 'plugins/flatpickr.js'
 
 Rails.start()
 Turbolinks.start()

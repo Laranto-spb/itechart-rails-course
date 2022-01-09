@@ -1,7 +1,19 @@
+<div class="col-4">
   <%= form_for :search, method: :get do |form| %>
-    <div class="form-group row mb-3">
-      <%= form.date_field :start_date, value: @start_date.to_date, class: "col-3 me-2" %>
-      <%= form.date_field :end_date, value: @end_date.to_date, class: "col-3 me-2" %>
+
+    <div class="mb-3">
+      <%= form.label "Start date"%>
+      <%= form.text_field :start_date, value: @start_date.to_date, class: "col-3 me-2 form-control", data: { behavior: "flatpickr" } %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label "End date"%>
+      <%= form.text_field :end_date, value: @end_date.to_date, class: "col-3 me-2 form-control", data: { behavior: "flatpickr" }%>
+    </div>
+
+    <div class="mb-3 justify-content-start">
       <%= form.submit 'Search', class: "btn btn-outline-success col-4" %>
     </div>
+
   <% end %>
+</div>

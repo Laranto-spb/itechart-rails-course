@@ -60,6 +60,9 @@ class ChartsController < ApplicationController
   end
 
   def validate_date(params)
-    params[:search].nil? || params[:search][:start_date].empty? || params[:search][:end_date].empty?
+    params[:search].nil? ||
+      params[:search][:start_date].empty? ||
+      params[:search][:end_date].empty? ||
+      params[:search][:start_date] > params[:search][:end_date]
   end
 end

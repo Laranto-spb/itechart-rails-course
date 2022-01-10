@@ -4,6 +4,7 @@ class ChartsController < ApplicationController
   before_action :set_user_people, only: %i[index]
   before_action :set_user_categories, only: %i[index]
 
+  # rubocop:disable Metrics/AbcSize
   def index
     if validate_date(params)
       @start_date = Time.zone.today.beginning_of_month
@@ -16,12 +17,13 @@ class ChartsController < ApplicationController
     set_credits
     set_debits
   end
+  # rubocop:enable Metrics/AbcSize
 
   private
 
-  def get_credit_transactions(categories, start_d, end_d)
+  def get_credit_transactions(start_d, end_d)
     credit_transaction = []
-    categories.select { |c| c.transaction_type == 'Credit' }.each do |credit|
+    Category.credit_cats(@categories).each do |credit|
       transactions = MoneyTransaction.where(person_category_id: credit.person_categories,
                                             created_at: start_d..end_d).sum(&:amount_value)
       credit_transaction += [[credit.name, transactions]] if transactions.positive?
@@ -29,9 +31,9 @@ class ChartsController < ApplicationController
     credit_transaction
   end
 
-  def get_debit_transactions(categories, start_d, end_d)
+  def get_debit_transactions(start_d, end_d)
     debit_transaction = []
-    categories.select { |c| c.transaction_type == 'Debit' }.each do |debit|
+    Category.debit_cats(@categories).each do |debit|
       transactions = MoneyTransaction.where(person_category_id: debit.person_categories,
                                             created_at: start_d..end_d).sum(&:amount_value)
       debit_transaction += [[debit.name, transactions]] if transactions.positive?
@@ -52,11 +54,11 @@ class ChartsController < ApplicationController
   end
 
   def set_credits
-    @credits = get_credit_transactions(@categories, @start_date, @end_date)
+    @credits = get_credit_transactions(@start_date, @end_date)
   end
 
   def set_debits
-    @debits = get_debit_transactions(@categories, @start_date, @end_date)
+    @debits = get_debit_transactions(@start_date, @end_date)
   end
 
   def validate_date(params)

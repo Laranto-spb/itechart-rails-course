@@ -21,24 +21,17 @@ class ChartsController < ApplicationController
 
   private
 
-  def get_credit_transactions(start_d, end_d)
-    credit_transaction = []
-    Category.credit_cats(@categories).each do |credit|
-      transactions = MoneyTransaction.where(person_category_id: credit.person_categories,
-                                            created_at: start_d..end_d).sum(&:amount_value)
-      credit_transaction += [[credit.name, transactions]] if transactions.positive?
-    end
-    credit_transaction
-  end
+  def get_transactions(start_d, end_d, credit = true)
+    transaction = []
 
-  def get_debit_transactions(start_d, end_d)
-    debit_transaction = []
-    Category.debit_cats(@categories).each do |debit|
-      transactions = MoneyTransaction.where(person_category_id: debit.person_categories,
+    categories = credit ? Category.credit_cats(@categories) : Category.debit_cats(@categories)
+
+    categories.each do |category|
+      transactions = MoneyTransaction.where(person_category_id: category.person_categories,
                                             created_at: start_d..end_d).sum(&:amount_value)
-      debit_transaction += [[debit.name, transactions]] if transactions.positive?
+      transaction += [[category.name, transactions]] if transactions.positive?
     end
-    debit_transaction
+    transaction
   end
 
   def format_date(date)
@@ -54,11 +47,12 @@ class ChartsController < ApplicationController
   end
 
   def set_credits
-    @credits = get_credit_transactions(@start_date, @end_date)
+    @credits = get_transactions(@start_date, @end_date)
   end
 
   def set_debits
-    @debits = get_debit_transactions(@start_date, @end_date)
+    is_credit = false
+    @debits = get_transactions(@start_date, @end_date, is_credit)
   end
 
   def validate_date(params)

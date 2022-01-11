@@ -21,3 +21,6 @@ Metrics/MethodLength:
 
 Rails/ActiveRecordOverride:
   Enabled: false
+
+Style/OptionalBooleanParameter:
+  Enabled: false

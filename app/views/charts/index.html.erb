@@ -1,0 +1,26 @@
+<h1><i class="bi bi-pie-chart-fill me-3"></i>Statistics for current month</h1>
+
+<p class="m-0"> Your people are: </p>
+<ul class="list-reset">
+  <% @people.each do |p|%>
+    <li><%= link_to p.name, person_path(p.id) %><li>
+  <% end %>
+</ul>
+
+<h2 class="mb-3"> Choose date range: </h2>
+<%= render 'search_form'%>
+
+
+<p> Current range: <%= @start_date.to_date %> - <%= @end_date.to_date%> </p>
+
+<div class="mb-5">
+  <h2>Total credits for all people:</h2>
+  <%= pie_chart @credits, donut: true %>
+  <%= render 'table', obj: @credits%>
+</div>
+
+<div>
+  <h2 >Total debits for all people:</h2>
+  <%= pie_chart @debits, donut: true %>
+  <%= render 'table', obj: @debits%>
+<div>

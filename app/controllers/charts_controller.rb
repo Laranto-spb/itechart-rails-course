@@ -14,8 +14,8 @@ class ChartsController < ApplicationController
       @end_date = format_date(DateTime.parse(params[:search][:end_date]))
     end
 
-    set_credits
-    set_debits
+    @credits = get_transactions(@start_date, @end_date)
+    @debits = get_transactions(@start_date, @end_date, false)
   end
   # rubocop:enable Metrics/AbcSize
 
@@ -44,15 +44,6 @@ class ChartsController < ApplicationController
 
   def set_user_categories
     @categories = current_user.people.collect(&:categories).flatten.uniq
-  end
-
-  def set_credits
-    @credits = get_transactions(@start_date, @end_date)
-  end
-
-  def set_debits
-    is_credit = false
-    @debits = get_transactions(@start_date, @end_date, is_credit)
   end
 
   def validate_date(params)
